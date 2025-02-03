@@ -28,29 +28,37 @@ function showProducts(products) {
 function addProduct() {
     const name = document.getElementById("productName").value.trim();
     const price = document.getElementById("productPrice").value.trim();
-    const image = document.getElementById("productImage").value.trim();
+    const image = document.getElementById("productImage");
     const description = document.getElementById("productDescription").value.trim();
 
     if (!name || !price || !description) {
         alert("Please fill in all details");
         return;
     }
+    let file = image.files[0];
+    let reader = new FileReader();
 
-    let lastId = products.length > 0 ? products[products.length - 1].id : 0;
-    products.push({
-        id: lastId  + 1,
-        name,
-        image,
-        price,
-        description
-    });
-  
+    reader.onloadend = () => {
+        let imageBase64 = reader.result;
+        let lastId = products.length > 0 ? products[products.length - 1].id : 0;
+        products.push({
+            id: lastId  + 1,
+            name,
+            image: imageBase64,
+            price,
+            description
+        });
+        localStorage.setItem("products", JSON.stringify(products));
+        showProducts(products);
+    }
+    
     document.getElementById("productName").value = "";
     document.getElementById("productImage").value = "";
     document.getElementById("productPrice").value = "";
     document.getElementById("productDescription").value = "";
 
-    showProducts(products);
+  
+    reader.readAsDataURL(file); 
 }
 
 function deleteProduct(index) {
@@ -82,7 +90,7 @@ function sortProducts() {
 
 function filterProducts() {
     const searchId = document.getElementById("searchId").value;
-    let searchProduct = products.filter(product => product.id.toString().includes(searchId));
+    let searchProduct = products.filter(product => product.id.toString().includes(searchId) || product.name.includes(searchId));
     
     showProducts(searchProduct);
 }

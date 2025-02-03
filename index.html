@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Product Management System</title>
-  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="./css/style.css" />
 </head>
 
 <body>
@@ -14,7 +14,7 @@
     <label for="productName">Product Name:</label>
     <input type="text" name="productName" id="productName" required />
     <label for="productImage">Image URL:</label>
-    <input type="text" name="productImage" id="productImage" />
+    <input type="file" name="productImage" id="productImage" accept="image/*"/>
     <label for="productPrice">Price:</label>
     <input type="number" name="productPrice" id="productPrice" required />
     <label for="productDescription">Description:</label>
@@ -22,7 +22,7 @@
     <input type="submit" value="Add product">
   </form>
   <div id="filter-sort">
-    <input type="text" id="searchId" placeholder="Filter by Product ID" oninput="filterProducts()" />
+    <input type="text" id="searchId" placeholder="Filter by Product ID or Product Name" oninput="filterProducts()" />
     <select id="sortOption" onchange="sortProducts()">
       <option value="id">Sort by ID</option>
       <option value="name">Sort by Name</option>
@@ -44,7 +44,7 @@
     <tbody id="product-list"></tbody>
   </table>
 
-  <script src="../js/script.js"></script>
+  <script src="./js/script.js"></script>
 </body>
 
 </html>

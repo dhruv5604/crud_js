@@ -9,6 +9,11 @@ body {
   max-width: 400px;
 }
 
+#form1 input[type="file"]{
+  border: 1px solid black;
+  margin: auto;
+}
+
 input,
 textarea,
 button,
