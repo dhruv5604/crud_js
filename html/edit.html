@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../css/style.css" />
 </head>
+
 <body>
     <h1>Product Management System</h1>
 
     <div id="product">
-        <input type="hidden" id="productId" />
-        <label>Product Name:</label>
-        <input type="text" id="productName" required />
-        <label>Image URL:</label>
-        <input type="text" id="productImage" />
-        <label>Price:</label>
-        <input type="number" id="productPrice" required />
-        <label>Description:</label>
-        <textarea id="productDescription" required></textarea>
-        <button onclick="updateProduct()">Edit Product</button>
+        <input type="hidden" id="productId" name="productId" />
+        <label for="productName">Product Name:</label>
+        <input type="text" name="productName" id="productName" required />
+        <label for="productImage">Image URL:</label>
+        <input type="text" name="productImage" id="productImage" />
+        <label for="productPrice">Price:</label>
+        <input type="number" name="productPrice" id="productPrice" required />
+        <label for="productDescription">Description:</label>
+        <textarea id="productDescription" name="productDescription" required></textarea>
+        <button onclick="updateProduct()">Save Product</button>
       </div>
 
     <script src="../js/edit.js"></script>
 </body>
+
 </html>
