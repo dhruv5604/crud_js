@@ -87,7 +87,6 @@ function sortProducts() {
     showProducts();
 }
 
-
 function filterProducts() {
     const searchId = document.getElementById("searchId").value;
     let searchProduct = products.filter(product => product.id.toString().includes(searchId));

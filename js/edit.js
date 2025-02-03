@@ -20,7 +20,7 @@ function updateProduct(){
     const description = document.getElementById("productDescription").value;
 
     let index = products.findIndex(p => p.id == id);
-    if(products.findIndex(p => p.id == id) != -1){
+    if(index != -1){
         products[index] = {id, name, image, price, description};
         localStorage.setItem("products",JSON.stringify(products));
         localStorage.removeItem("editProductId");
