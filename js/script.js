@@ -41,8 +41,9 @@ function addProduct() {
         products[id] = { id: parseInt(id) + 1, name, image, price, description };
     }
     else {
+        let lastId = products.length > 0 ? products[products.length - 1].id : 0;
         products.push({
-            id: products[products.length-1].id  + 1,
+            id: lastId  + 1,
             name,
             image,
             price,
