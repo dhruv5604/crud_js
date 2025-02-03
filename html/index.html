@@ -1,55 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Product Management System</title>
-    <link rel="stylesheet" href="../css/style.css" />
-  </head>
-  <body>
-    <h1>Product Management System</h1>
-    <form action="" id="form1">
-    <div id="product">
-      <input type="hidden" id="productId" name="productId"/>
-      <label for="productName">Product Name:</label>
-      <input type="text" name="productName" id="productName" required />
-      <label for="productImage">Image URL:</label>
-      <input type="text" name="productImage" id="productImage" />
-      <label for="productPrice">Price:</label>
-      <input type="number" name="productPrice" id="productPrice" required />
-      <label for="productDescription">Description:</label>
-      <textarea id="productDescription" name="pro" required></textarea>
-      <input type="submit" value="Add product" >
-    </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Management System</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+
+<body>
+  <h1>Product Management System</h1>
+  <form action="" id="form1">
+    <input type="hidden" id="productId" name="productId" />
+    <label for="productName">Product Name:</label>
+    <input type="text" name="productName" id="productName" required />
+    <label for="productImage">Image URL:</label>
+    <input type="text" name="productImage" id="productImage" />
+    <label for="productPrice">Price:</label>
+    <input type="number" name="productPrice" id="productPrice" required />
+    <label for="productDescription">Description:</label>
+    <textarea id="productDescription" name="pro" required></textarea>
+    <input type="submit" value="Add product">
   </form>
-    <div id="filter-sort">
-      <input
-        type="text"
-        id="searchId"
-        placeholder="Filter by Product ID"
-        oninput="filterProducts()"
-      />
-      <select id="sortOption" onchange="sortProducts()">
-        <option value="id">Sort by ID</option>
-        <option value="name">Sort by Name</option>
-        <option value="price">Sort by Price</option>
-      </select>
-    </div>
+  <div id="filter-sort">
+    <input type="text" id="searchId" placeholder="Filter by Product ID" oninput="filterProducts()" />
+    <select id="sortOption" onchange="sortProducts()">
+      <option value="id">Sort by ID</option>
+      <option value="name">Sort by Name</option>
+      <option value="price">Sort by Price</option>
+    </select>
+  </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Product ID</th>
-          <th>Name</th>
-          <th>Image</th>
-          <th>Price</th>
-          <th>Description</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="product-list"></tbody>
-    </table>
+  <table>
+    <thead>
+      <tr>
+        <th>Product ID</th>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="product-list"></tbody>
+  </table>
 
-    <script src="../js/script.js"></script>
-  </body>
+  <script src="../js/script.js"></script>
+</body>
+
 </html>

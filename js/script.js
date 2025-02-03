@@ -1,8 +1,8 @@
 let products = JSON.parse(localStorage.getItem("products")) || []
 
-showProducts()
+showProducts(products)
 
-function showProducts() {
+function showProducts(products) {
     const productList = document.getElementById("product-list");
     productList.innerHTML = "";
 
@@ -57,13 +57,13 @@ function addProduct() {
     document.getElementById("productPrice").value = "";
     document.getElementById("productDescription").value = "";
 
-    showProducts();
+    showProducts(products);
 }
 
 function deleteProduct(index) {
     if (confirm("Are you sure you want to delete this product?")) {
         products.splice(index, 1);
-        showProducts();
+        showProducts(products);
     }
 }
 
@@ -77,38 +77,21 @@ function sortProducts() {
 
     if (option === "price") {
         products.sort((a, b) => a.price - b.price);
-        console.log(products)
     }
-    if (option === "name") {
+    else if (option === "name") {
         products.sort((a, b) => a.name.localeCompare(b.name));
     }
-    if (option === "id") {
+    else {
         products.sort((a, b) => a.id - b.id)
     }
-    showProducts();
+    showProducts(products);
 }
 
 function filterProducts() {
     const searchId = document.getElementById("searchId").value;
     let searchProduct = products.filter(product => product.id.toString().includes(searchId));
-    const productList = document.getElementById("product-list");
-    productList.innerHTML = "";
-
-    searchProduct.forEach((product, index) => {
-        productList.innerHTML += `
-            <tr>
-                <td>${product.id}</td>
-                <td>${product.name}</td>
-                <td><img src="${product.image}" alt="Product Image"></td>
-                <td>$${product.price}</td>
-                <td>${product.description}</td>
-                <td>
-                    <button onclick="editProduct(${index})">Edit</button>
-                    <button onclick="deleteProduct(${index})">Delete</button>
-                </td>
-            </tr>
-        `;
-    });
+    
+    showProducts(searchProduct);
 }
 
 document.getElementById("form1").addEventListener("submit", (e) => {
