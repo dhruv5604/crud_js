@@ -26,7 +26,6 @@ function showProducts(products) {
 }
 
 function addProduct() {
-    const id = document.getElementById("productId").value;
     const name = document.getElementById("productName").value.trim();
     const price = document.getElementById("productPrice").value.trim();
     const image = document.getElementById("productImage").value.trim();
@@ -37,21 +36,15 @@ function addProduct() {
         return;
     }
 
-    if (id) {
-        products[id] = { id: parseInt(id) + 1, name, image, price, description };
-    }
-    else {
-        let lastId = products.length > 0 ? products[products.length - 1].id : 0;
-        products.push({
-            id: lastId  + 1,
-            name,
-            image,
-            price,
-            description
-        });
-    }
-
-    document.getElementById("productId").value = "";
+    let lastId = products.length > 0 ? products[products.length - 1].id : 0;
+    products.push({
+        id: lastId  + 1,
+        name,
+        image,
+        price,
+        description
+    });
+  
     document.getElementById("productName").value = "";
     document.getElementById("productImage").value = "";
     document.getElementById("productPrice").value = "";
