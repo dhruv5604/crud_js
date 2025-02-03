@@ -28,5 +28,7 @@ function updateProduct(){
     }
 }
 
-
-
+document.getElementById("form1").addEventListener("submit", (e) => {
+    e.preventDefault();
+    updateProduct();
+})

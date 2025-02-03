@@ -110,3 +110,8 @@ function filterProducts() {
         `;
     });
 }
+
+document.getElementById("form1").addEventListener("submit", (e) => {
+    e.preventDefault();
+    addProduct();
+})
