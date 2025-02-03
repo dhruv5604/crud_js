@@ -1,77 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Management System</title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Product Management System</title>
-  <link rel="stylesheet" href="./css/style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
+  <body>
+    <h1>Product Management System</h1>
+    <form action="" id="form1">
+      <label for="productName">Product Name:</label>
+      <input type="text" name="productName" id="productName" required />
+      <label for="productImage">Image URL:</label>
+      <input
+        type="file"
+        name="productImage"
+        id="productImage"
+        accept="image/*"
+      />
+      <label for="productPrice">Price:</label>
+      <input type="number" name="productPrice" id="productPrice" required />
+      <label for="productDescription">Description:</label>
+      <textarea id="productDescription" name="pro" required></textarea>
+      <input type="submit" value="Add product" />
+    </form>
+    <div id="filter-sort">
+      <input
+        type="text"
+        id="searchId"
+        placeholder="Filter by Product ID or Product Name"
+        oninput="filterProducts()"
+      />
+      <select id="sortOption" onchange="sortProducts()">
+        <option value="id">Sort by ID</option>
+        <option value="name">Sort by Name</option>
+        <option value="price">Sort by Price</option>
+      </select>
+    </div>
 
-<body>
-  <h1>Product Management System</h1>
-  <form action="" id="form1">
-    <label for="productName">Product Name:</label>
-    <input type="text" name="productName" id="productName" required />
-    <label for="productImage">Image URL:</label>
-    <input type="file" name="productImage" id="productImage" accept="image/*" />
-    <label for="productPrice">Price:</label>
-    <input type="number" name="productPrice" id="productPrice" required />
-    <label for="productDescription">Description:</label>
-    <textarea id="productDescription" name="pro" required></textarea>
-    <input type="submit" value="Add product">
-  </form>
-  <div id="filter-sort">
-    <input type="text" id="searchId" placeholder="Filter by Product ID or Product Name" oninput="filterProducts()" />
-    <select id="sortOption" onchange="sortProducts()">
-      <option value="id">Sort by ID</option>
-      <option value="name">Sort by Name</option>
-      <option value="price">Sort by Price</option>
-    </select>
-  </div>
+    <table>
+      <thead>
+        <tr>
+          <th>
+            <div class="inside-th">
+              Product ID
+              <button class="sort-btn" data-sort="id">
+                <i class="fa-solid fa-sort"></i>
+              </button>
+            </div>
+          </th>
+          <th>
+            <div class="inside-th">
+              Name
+              <button class="sort-btn" data-sort="name">
+                <i class="fa-solid fa-sort"></i>
+              </button>
+            </div>
+          </th>
+          <th>Image</th>
+          <th>
+            <div class="inside-th">
+              Price
+              <button class="sort-btn" data-sort="price">
+                <i class="fa-solid fa-sort"></i>
+              </button>
+            </div>
+          </th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="product-list"></tbody>
+    </table>
 
-  <table>
-    <thead>
-      <tr>
-        <th>
-          <div class="inside-th">Product ID 
-            <button class="sort-btn" value="sortId">
-              <i class="fa-solid fa-sort"></i>
-            </button>
-          </div>
-        </th>
-        <th>
-          <div class="inside-th">Name
-            <button class="sort-btn" value="sortName">
-              <i class="fa-solid fa-sort"></i>
-            </button>
-          </div>
-        </th>
-        <th>
-          Image
-        </th>
-        <th>
-          <div class="inside-th">Price
-            <button class="sort-btn" value="sortPrice">
-              <i class="fa-solid fa-sort"></i>
-            </button>
-          </div>
-        </th>
-        <th>
-          Description
-        </th>
-        <th>
-          Actions
-        </th>
-      </tr>
-    </thead>
-    <tbody id="product-list"></tbody>
-  </table>
-
-  <script src="./js/script.js"></script>
-</body>
-
+    <script src="./js/script.js"></script>
+  </body>
 </html>

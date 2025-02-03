@@ -4,11 +4,11 @@ showProducts(products)
 
 function showProducts(products) {
     const productList = document.getElementById("product-list");
-    let productListHtml = '';
-    // productList.innerHTML = "";
+    // let productListHtml = '';
+    productList.innerHTML = "";
 
     products.forEach((product, index) => {
-        productListHtml += `
+        productList.innerHTML += `
             <tr>
                 <td>${product.id}</td>
                 <td>${product.name}</td>
@@ -23,7 +23,7 @@ function showProducts(products) {
         `;
     });
 
-    productList.insertAdjacentHTML('afterbegin', productListHtml)
+    // productList.insertAdjacentHTML('afterbegin', productListHtml)
 }
 
 function addProduct() {
@@ -107,45 +107,31 @@ document.getElementById("form1").addEventListener("submit", (e) => {
     addProduct();
 })
 
-let sortBtns = document.getElementsByClassName("sort-btn");
-// let tempProducts = products;
-let tempProducts = [...products];
-
-for (let sortBtn of sortBtns) {
+document.querySelectorAll(".sort-btn").forEach((sortBtn) => {
     sortBtn.addEventListener("click", () => {
-        
-        if (sortBtn.value == "sortId") {
-            tempProducts.sort((a, b) => a.id - b.id);
-            sortBtn.innerHTML = '<i class="fa-solid fa-sort-up"></i>';
-            sortBtn.value = "sortIdUp";
-        } else if (sortBtn.value == "sortIdUp") {
-            tempProducts.sort((a, b) => b.id - a.id);
-            sortBtn.innerHTML = '<i class="fa-solid fa-sort-down"></i>';
-            sortBtn.value = "sortIdDown";
-        } else if (sortBtn.value == "sortIdDown") {
-            tempProducts.sort((a, b) => a.id - b.id);
-            sortBtn.innerHTML = '<i class="fa-solid fa-sort"></i>';
-            sortBtn.value = "sortId";
-        } else if (sortBtn.value == "sortName") {
-            tempProducts.sort((a, b) => a.name.localeCompare(b.name));
-            console.log("products",products);
-            console.log(tempProducts);
-            sortBtn.innerHTML = '<i class="fa-solid fa-sort-up"></i>';
-            sortBtn.value = "sortNameUp";
-        } else if (sortBtn.value == "sortNameUp") {
-            tempProducts.sort((a, b) => b.name.localeCompare(a.name));
-            sortBtn.innerHTML = '<i class="fa-solid fa-sort-down"></i>';
-            console.log("products",products);
-            console.log(tempProducts);
-            sortBtn.value = "sortNameDown";
-        } else if (sortBtn.value == "sortNameDown") {
-            tempProducts = products;
-            console.log("products",products);
-            console.log(tempProducts);
-            sortBtn.innerHTML = '<i class="fa-solid fa-sort"></i>';
-            sortBtn.value = "sortName";
+        let tempProducts = [...products];
+        let sortType = sortBtn.dataset.sort;
+        let sortOrder = sortBtn.dataset.order || "asc"; // Default order is ascending
+
+        const sortMethods = {
+            id: (a, b) => a.id - b.id,
+            name: (a, b) => a.name.localeCompare(b.name),
+            price: (a, b) => a.price - b.price
+        };
+
+        if (sortOrder === "asc") {
+            tempProducts.sort(sortMethods[sortType]);
+            sortBtn.dataset.order = "desc";
+            sortBtn.innerHTML = `<i class="fa-solid fa-sort-up"></i>`;
+        } else if (sortOrder === "desc") {
+            tempProducts.sort((a, b) => sortMethods[sortType](b, a));
+            sortBtn.dataset.order = "none";
+            sortBtn.innerHTML = `<i class="fa-solid fa-sort-down"></i>`;
+        } else {
+            tempProducts = [...products];
+            sortBtn.dataset.order = "asc";
+            sortBtn.innerHTML = `<i class="fa-solid fa-sort"></i>`;
         }
         showProducts(tempProducts);
-    })
-
-}
+    });
+});
