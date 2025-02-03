@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Product Management System</title>
   <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -14,7 +17,7 @@
     <label for="productName">Product Name:</label>
     <input type="text" name="productName" id="productName" required />
     <label for="productImage">Image URL:</label>
-    <input type="file" name="productImage" id="productImage" accept="image/*"/>
+    <input type="file" name="productImage" id="productImage" accept="image/*" />
     <label for="productPrice">Price:</label>
     <input type="number" name="productPrice" id="productPrice" required />
     <label for="productDescription">Description:</label>
@@ -33,12 +36,36 @@
   <table>
     <thead>
       <tr>
-        <th>Product ID</th>
-        <th>Name</th>
-        <th>Image</th>
-        <th>Price</th>
-        <th>Description</th>
-        <th>Actions</th>
+        <th>
+          <div class="inside-th">Product ID 
+            <button class="sort-btn" value="sortId">
+              <i class="fa-solid fa-sort"></i>
+            </button>
+          </div>
+        </th>
+        <th>
+          <div class="inside-th">Name
+            <button class="sort-btn" value="sortName">
+              <i class="fa-solid fa-sort"></i>
+            </button>
+          </div>
+        </th>
+        <th>
+          Image
+        </th>
+        <th>
+          <div class="inside-th">Price
+            <button class="sort-btn" value="sortPrice">
+              <i class="fa-solid fa-sort"></i>
+            </button>
+          </div>
+        </th>
+        <th>
+          Description
+        </th>
+        <th>
+          Actions
+        </th>
       </tr>
     </thead>
     <tbody id="product-list"></tbody>

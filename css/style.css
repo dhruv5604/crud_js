@@ -41,3 +41,16 @@ img {
   height: 50px;
   object-fit: cover;
 }
+
+th .inside-th {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sort-btn {
+  background-color: white;
+  width: 20px;
+  border: none;
+  margin-top: 10px;
+}
