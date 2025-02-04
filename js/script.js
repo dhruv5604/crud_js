@@ -7,26 +7,46 @@ function showProducts(products) {
     productList.innerHTML = "";
 
     products.forEach((product, index) => {
-       
+
         let tableBody = document.getElementById("product-list");
+
         let tr = document.createElement("tr");
         let id = document.createElement("td");
         id.innerHTML = product.id;
+
         let name = document.createElement("td");
         name.innerHTML = product.name;
-        let img = document.createElement("td");
-        img.innerHTML = `<img src="${product.image}" alt="Product Image">`;
+
+        let imgTd = document.createElement("td");
+        let image = document.createElement("img");
+        image.src = product.image;
+        image.alt = "Product Image";
+        imgTd.appendChild(image);
+
         let price = document.createElement("td");
         price.innerHTML = product.price;
+
         let description = document.createElement("td");
         description.innerHTML = product.description;
+
         let action = document.createElement("td");
-        action.innerHTML = `<button onclick="editProduct(${product.id})">Edit</button>
-                 <button onclick="deleteProduct(${index})">Delete</button>`;
+        let editBtn = document.createElement("button");
+        editBtn.classList.add("editBtn");
+        editBtn.setAttribute("data-id", product.id);
+        editBtn.innerHTML = "Edit";
+        editBtn.addEventListener("click", () => editProduct(product.id));
+
+        let deleteBtn = document.createElement("button");
+        deleteBtn.classList.add("deleteBtn");
+        deleteBtn.setAttribute("data-id", product.id);
+        deleteBtn.innerHTML = "Delete";
+        deleteBtn.addEventListener("click", () => deleteProduct(index));
+        action.appendChild(editBtn);
+        action.appendChild(deleteBtn);
 
         tr.appendChild(id);
         tr.appendChild(name);
-        tr.appendChild(img);
+        tr.appendChild(imgTd);
         tr.appendChild(price);
         tr.appendChild(description);
         tr.appendChild(action);
@@ -48,10 +68,10 @@ function addProduct() {
     let file = image.files[0];
     let reader = new FileReader();
 
-    reader.onloadend = () => {
+    reader.onfadend = () => {
         let imageBase64 = reader.result;
         let lastId = products.length > 0 ? products[products.length - 1].id : 0;
-        
+
         products.push({
             id: parseInt(lastId) + 1,
             name,
@@ -119,16 +139,14 @@ document.querySelectorAll(".sort-btn").forEach((sortBtn) => {
     });
 });
 
-
-
-document.getElementById("searchId").addEventListener("input" , () => {
+document.getElementById("searchId").addEventListener("input", () => {
     const searchId = document.getElementById("searchId").value;
     let searchProduct = products.filter(product => product.id.toString().includes(searchId) || product.name.includes(searchId));
 
     showProducts(searchProduct);
 })
 
-document.getElementById("sortOption").addEventListener("change" , () => {
+document.getElementById("sortOption").addEventListener("change", () => {
     let option = document.getElementById("sortOption").value;
     let tempProducts = [...products];
 

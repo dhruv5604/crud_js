@@ -1,5 +1,10 @@
 let productId = localStorage.getItem("editProductId");
 
+if(!productId){
+    alert("Product not found!!!!");
+    window.location.href = "index.html";
+}
+
 let products = JSON.parse(localStorage.getItem("products"));
 
 let product = products.find(p=>p.id == productId);
