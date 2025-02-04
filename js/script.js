@@ -51,9 +51,7 @@ function addProduct() {
     reader.onloadend = () => {
         let imageBase64 = reader.result;
         let lastId = products.length > 0 ? products[products.length - 1].id : 0;
-        console.log(products);
-        console.log(JSON.parse(localStorage.getItem("products")))
-
+        
         products.push({
             id: parseInt(lastId) + 1,
             name,
@@ -92,17 +90,17 @@ document.getElementById("form1").addEventListener("submit", (e) => {
     addProduct();
 })
 
+const sortMethods = {
+    id: (a, b) => a.id - b.id,
+    name: (a, b) => a.name.localeCompare(b.name),
+    price: (a, b) => a.price - b.price
+};
+
 document.querySelectorAll(".sort-btn").forEach((sortBtn) => {
     sortBtn.addEventListener("click", () => {
         let tempProducts = [...products];
         let sortType = sortBtn.dataset.sort;
         let sortOrder = sortBtn.dataset.order || "asc";
-
-        const sortMethods = {
-            id: (a, b) => a.id - b.id,
-            name: (a, b) => a.name.localeCompare(b.name),
-            price: (a, b) => a.price - b.price
-        };
 
         if (sortOrder === "asc") {
             tempProducts.sort(sortMethods[sortType]);
@@ -122,6 +120,7 @@ document.querySelectorAll(".sort-btn").forEach((sortBtn) => {
 });
 
 
+
 document.getElementById("searchId").addEventListener("input" , () => {
     const searchId = document.getElementById("searchId").value;
     let searchProduct = products.filter(product => product.id.toString().includes(searchId) || product.name.includes(searchId));
@@ -133,14 +132,6 @@ document.getElementById("sortOption").addEventListener("change" , () => {
     let option = document.getElementById("sortOption").value;
     let tempProducts = [...products];
 
-    if (option === "price") {
-        tempProducts.sort((a, b) => a.price - b.price);
-    }
-    else if (option === "name") {
-        tempProducts.sort((a, b) => a.name.localeCompare(b.name));
-    }
-    else {
-        tempProducts.sort((a, b) => a.id - b.id)
-    }
+    tempProducts.sort(sortMethods[option]);
     showProducts(tempProducts);
 }) 
