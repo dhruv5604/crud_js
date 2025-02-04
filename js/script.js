@@ -88,7 +88,6 @@ function addProduct() {
     document.getElementById("productPrice").value = "";
     document.getElementById("productDescription").value = "";
 
-
     reader.readAsDataURL(file);
 }
 
@@ -149,7 +148,7 @@ document.getElementById("searchId").addEventListener("input", () => {
 document.getElementById("sortOption").addEventListener("change", () => {
     let option = document.getElementById("sortOption").value;
     let tempProducts = [...products];
-
     tempProducts.sort(sortMethods[option]);
+    
     showProducts(tempProducts);
 }) 
