@@ -87,28 +87,6 @@ function editProduct(index) {
     window.location.href = "edit.html";
 }
 
-function sortProducts() {
-    let option = document.getElementById("sortOption").value;
-
-    if (option === "price") {
-        products.sort((a, b) => a.price - b.price);
-    }
-    else if (option === "name") {
-        products.sort((a, b) => a.name.localeCompare(b.name));
-    }
-    else {
-        products.sort((a, b) => a.id - b.id)
-    }
-    showProducts(products);
-}
-
-function filterProducts() {
-    const searchId = document.getElementById("searchId").value;
-    let searchProduct = products.filter(product => product.id.toString().includes(searchId) || product.name.includes(searchId));
-
-    showProducts(searchProduct);
-}
-
 document.getElementById("form1").addEventListener("submit", (e) => {
     e.preventDefault();
     addProduct();
@@ -142,3 +120,27 @@ document.querySelectorAll(".sort-btn").forEach((sortBtn) => {
         showProducts(tempProducts);
     });
 });
+
+
+document.getElementById("searchId").addEventListener("input" , () => {
+    const searchId = document.getElementById("searchId").value;
+    let searchProduct = products.filter(product => product.id.toString().includes(searchId) || product.name.includes(searchId));
+
+    showProducts(searchProduct);
+})
+
+document.getElementById("sortOption").addEventListener("change" , () => {
+    let option = document.getElementById("sortOption").value;
+    let tempProducts = [...products];
+
+    if (option === "price") {
+        tempProducts.sort((a, b) => a.price - b.price);
+    }
+    else if (option === "name") {
+        tempProducts.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    else {
+        tempProducts.sort((a, b) => a.id - b.id)
+    }
+    showProducts(tempProducts);
+}) 
