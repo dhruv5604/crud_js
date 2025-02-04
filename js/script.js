@@ -4,26 +4,35 @@ showProducts(products)
 
 function showProducts(products) {
     const productList = document.getElementById("product-list");
-    // let productListHtml = '';
     productList.innerHTML = "";
 
     products.forEach((product, index) => {
-        productList.innerHTML += `
-            <tr>
-                <td>${product.id}</td>
-                <td>${product.name}</td>
-                <td><img src="${product.image}" alt="Product Image"></td>
-                <td>${product.price}</td>
-                <td>${product.description}</td>
-                <td>
-                    <button onclick="editProduct(${product.id})">Edit</button>
-                    <button onclick="deleteProduct(${index})">Delete</button>
-                </td>
-            </tr>
-        `;
-    });
+       
+        let tableBody = document.getElementById("product-list");
+        let tr = document.createElement("tr");
+        let id = document.createElement("td");
+        id.innerHTML = product.id;
+        let name = document.createElement("td");
+        name.innerHTML = product.name;
+        let img = document.createElement("td");
+        img.innerHTML = `<img src="${product.image}" alt="Product Image">`;
+        let price = document.createElement("td");
+        price.innerHTML = product.price;
+        let description = document.createElement("td");
+        description.innerHTML = product.description;
+        let action = document.createElement("td");
+        action.innerHTML = `<button onclick="editProduct(${product.id})">Edit</button>
+                 <button onclick="deleteProduct(${index})">Delete</button>`;
 
-    // productList.insertAdjacentHTML('afterbegin', productListHtml)
+        tr.appendChild(id);
+        tr.appendChild(name);
+        tr.appendChild(img);
+        tr.appendChild(price);
+        tr.appendChild(description);
+        tr.appendChild(action);
+
+        tableBody.appendChild(tr);
+    });
 }
 
 function addProduct() {
@@ -44,7 +53,7 @@ function addProduct() {
         let lastId = products.length > 0 ? products[products.length - 1].id : 0;
         console.log(products);
         console.log(JSON.parse(localStorage.getItem("products")))
-        
+
         products.push({
             id: parseInt(lastId) + 1,
             name,
@@ -91,7 +100,6 @@ function sortProducts() {
         products.sort((a, b) => a.id - b.id)
     }
     showProducts(products);
-    localStorage.setItem("products", JSON.stringify(products));
 }
 
 function filterProducts() {
@@ -99,7 +107,6 @@ function filterProducts() {
     let searchProduct = products.filter(product => product.id.toString().includes(searchId) || product.name.includes(searchId));
 
     showProducts(searchProduct);
-    localStorage.setItem("products", JSON.stringify(products));
 }
 
 document.getElementById("form1").addEventListener("submit", (e) => {
@@ -111,7 +118,7 @@ document.querySelectorAll(".sort-btn").forEach((sortBtn) => {
     sortBtn.addEventListener("click", () => {
         let tempProducts = [...products];
         let sortType = sortBtn.dataset.sort;
-        let sortOrder = sortBtn.dataset.order || "asc"; // Default order is ascending
+        let sortOrder = sortBtn.dataset.order || "asc";
 
         const sortMethods = {
             id: (a, b) => a.id - b.id,
@@ -122,15 +129,15 @@ document.querySelectorAll(".sort-btn").forEach((sortBtn) => {
         if (sortOrder === "asc") {
             tempProducts.sort(sortMethods[sortType]);
             sortBtn.dataset.order = "desc";
-            sortBtn.innerHTML = `<i class="fa-solid fa-sort-up"></i>`;
+            sortBtn.innerHTML = `<i class="fas fa-sort-up"></i>`;
         } else if (sortOrder === "desc") {
             tempProducts.sort((a, b) => sortMethods[sortType](b, a));
             sortBtn.dataset.order = "none";
-            sortBtn.innerHTML = `<i class="fa-solid fa-sort-down"></i>`;
+            sortBtn.innerHTML = `<i class="fas fa-sort-down"></i>`;
         } else {
             tempProducts = [...products];
             sortBtn.dataset.order = "asc";
-            sortBtn.innerHTML = `<i class="fa-solid fa-sort"></i>`;
+            sortBtn.innerHTML = `<i class="fas fa-sort"></i>`;
         }
         showProducts(tempProducts);
     });
