@@ -1,77 +1,154 @@
 let products = JSON.parse(localStorage.getItem("products")) || []
 
-function showProducts(){
+showProducts(products)
+
+function showProducts(products) {
     const productList = document.getElementById("product-list");
     productList.innerHTML = "";
 
-    products.forEach((product,index) => {
-        productList.innerHTML += `
-            <tr>
-                <td>${product.id}</td>
-                <td>${product.name}</td>
-                <td><img src="${product.image}" alt="Product Image"></td>
-                <td>${product.price}</td>
-                <td>${product.description}</td>
-                <td>
-                    <button onclick="editProduct(${index})">Edit</button>
-                    <button onclick="deleteProduct(${index})">Delete</button>
-                </td>
-            </tr>
-        `;
-    });
+    products.forEach((product, index) => {
 
-    localStorage.setItem("products",JSON.stringify(products));
+        let tableBody = document.getElementById("product-list");
+
+        let tr = document.createElement("tr");
+        let id = document.createElement("td");
+        id.innerHTML = product.id;
+
+        let name = document.createElement("td");
+        name.innerHTML = product.name;
+
+        let imgTd = document.createElement("td");
+        let image = document.createElement("img");
+        image.src = product.image;
+        image.alt = "Product Image";
+        imgTd.appendChild(image);
+
+        let price = document.createElement("td");
+        price.innerHTML = product.price;
+
+        let description = document.createElement("td");
+        description.innerHTML = product.description;
+
+        let action = document.createElement("td");
+        let editBtn = document.createElement("button");
+        editBtn.classList.add("editBtn");
+        editBtn.setAttribute("data-id", product.id);
+        editBtn.innerHTML = "Edit";
+        editBtn.addEventListener("click", () => editProduct(product.id));
+
+        let deleteBtn = document.createElement("button");
+        deleteBtn.classList.add("deleteBtn");
+        deleteBtn.setAttribute("data-id", product.id);
+        deleteBtn.innerHTML = "Delete";
+        deleteBtn.addEventListener("click", () => deleteProduct(index));
+        action.appendChild(editBtn);
+        action.appendChild(deleteBtn);
+
+        tr.appendChild(id);
+        tr.appendChild(name);
+        tr.appendChild(imgTd);
+        tr.appendChild(price);
+        tr.appendChild(description);
+        tr.appendChild(action);
+
+        tableBody.appendChild(tr);
+    });
 }
 
-function addOrUpdateProduct(){
-    const id = document.getElementById("productId").value;
+function addProduct() {
     const name = document.getElementById("productName").value.trim();
     const price = document.getElementById("productPrice").value.trim();
-    const image = document.getElementById("productImage").value.trim();
-    const desc = document.getElementById("productDescription").value.trim();
+    const image = document.getElementById("productImage");
+    const description = document.getElementById("productDescription").value.trim();
 
-    if(!name || !price || !desc){
+    if (!name || !price || !description) {
         alert("Please fill in all details");
         return;
     }
+    let file = image.files[0];
+    let reader = new FileReader();
 
-    if(id){
-        products[id] = {id: parseInt(id) + 1,name,image,price,desc};
-    }
-    else{
+    reader.onfadend = () => {
+        let imageBase64 = reader.result;
+        let lastId = products.length > 0 ? products[products.length - 1].id : 0;
+
         products.push({
-            id: products.length + 1,
+            id: parseInt(lastId) + 1,
             name,
-            image,
+            image: imageBase64,
             price,
-            desc
+            description
         });
+        localStorage.setItem("products", JSON.stringify(products));
+        showProducts(products);
     }
 
-    document.getElementById("productId").value = "";
     document.getElementById("productName").value = "";
     document.getElementById("productImage").value = "";
     document.getElementById("productPrice").value = "";
     document.getElementById("productDescription").value = "";
 
-    showProducts();
+    reader.readAsDataURL(file);
 }
 
-
-function deleteProduct(index){
-    if(confirm("Are you sure you want to delete this product?")){
-        products.splice(index,1);
-        showProducts();
+function deleteProduct(index) {
+    if (confirm("Are you sure you want to delete this product?")) {
+        products.splice(index, 1);
+        showProducts(products);
+        localStorage.setItem("products", JSON.stringify(products));
     }
 }
 
-function editProduct(index){
-    const product = products[index];
-
-    document.getElementById("productId").value = index;
-    document.getElementById("productName").value = product.name;
-    document.getElementById("productImage").value = product.image;
-    document.getElementById("productPrice").value = product.price;
-    document.getElementById("productDescription").value = product.description;
+function editProduct(index) {
+    localStorage.setItem("editProductId", index);
+    window.location.href = "edit.html";
 }
 
+document.getElementById("form1").addEventListener("submit", (e) => {
+    e.preventDefault();
+    addProduct();
+})
+
+const sortMethods = {
+    id: (a, b) => a.id - b.id,
+    name: (a, b) => a.name.localeCompare(b.name),
+    price: (a, b) => a.price - b.price
+};
+
+document.querySelectorAll(".sort-btn").forEach((sortBtn) => {
+    sortBtn.addEventListener("click", () => {
+        let tempProducts = [...products];
+        let sortType = sortBtn.dataset.sort;
+        let sortOrder = sortBtn.dataset.order || "asc";
+
+        if (sortOrder === "asc") {
+            tempProducts.sort(sortMethods[sortType]);
+            sortBtn.dataset.order = "desc";
+            sortBtn.innerHTML = `<i class="fas fa-sort-up"></i>`;
+        } else if (sortOrder === "desc") {
+            tempProducts.sort((a, b) => sortMethods[sortType](b, a));
+            sortBtn.dataset.order = "none";
+            sortBtn.innerHTML = `<i class="fas fa-sort-down"></i>`;
+        } else {
+            tempProducts = [...products];
+            sortBtn.dataset.order = "asc";
+            sortBtn.innerHTML = `<i class="fas fa-sort"></i>`;
+        }
+        showProducts(tempProducts);
+    });
+});
+
+document.getElementById("searchId").addEventListener("input", () => {
+    const searchId = document.getElementById("searchId").value;
+    let searchProduct = products.filter(product => product.id.toString().includes(searchId) || product.name.includes(searchId));
+
+    showProducts(searchProduct);
+})
+
+document.getElementById("sortOption").addEventListener("change", () => {
+    let option = document.getElementById("sortOption").value;
+    let tempProducts = [...products];
+    tempProducts.sort(sortMethods[option]);
+    
+    showProducts(tempProducts);
+}) 

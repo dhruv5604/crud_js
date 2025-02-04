@@ -3,10 +3,15 @@ body {
   text-align: center;
 }
 
-#product,
+#form1,
 #filter-sort {
   margin: 20px auto;
   max-width: 400px;
+}
+
+#form1 input[type="file"]{
+  border: 1px solid black;
+  margin: auto;
 }
 
 input,
@@ -35,4 +40,17 @@ img {
   width: 50px;
   height: 50px;
   object-fit: cover;
+}
+
+th .inside-th {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sort-btn {
+  background-color: white;
+  width: 20px;
+  border: none;
+  margin-top: 10px;
 }
